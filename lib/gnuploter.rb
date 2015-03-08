@@ -20,5 +20,12 @@ module Gnuploter
     def plot(function)
       @plot.puts "plot " + function
     end
+
+    def plot_to_png(function, filename)
+      @plot.puts 'set term png'
+      @plot.puts 'set output #{filename}'
+      @plot.puts "plot " + function
+    end
+
   end
 end
