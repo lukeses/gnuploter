@@ -1,4 +1,5 @@
 require "gnuploter/version"
+require "fileutils"
 
 module Gnuploter
   class Gnuplot
@@ -21,10 +22,18 @@ module Gnuploter
       @plot.puts "plot " + function
     end
 
-    def plot_to_png(function, filename)
-      @plot.puts 'set term png'
-      @plot.puts 'set output #{filename}'
-      @plot.puts "plot " + function
+    def plot_to_png(function, filename, path='')
+      if path.empty?
+        @plot.puts 'set term png'
+        @plot.puts "set output \"#{filename}\""
+        @plot.puts "plot " + function
+      else
+        FileUtils.mkdir_p(path)
+        @plot.puts 'set term png'
+        @plot.puts "set output \"#{File.join(path,filename)}\""
+        @plot.puts "plot " + function
+      end
+#      @plot.puts "set term x11"
     end
 
   end
